@@ -6,7 +6,7 @@
 /*   By: amwahab <amwahab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:56:16 by amwahab           #+#    #+#             */
-/*   Updated: 2025/07/11 16:28:02 by amwahab          ###   ########.fr       */
+/*   Updated: 2025/07/11 16:37:25 by amwahab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef struct s_vars
 	void	*mlx;
 	void	*win;
 	int		zoom;
+	int		color;
+	int		frame_count;
 }	t_vars;
 
 void	get_origin(int width, int height, int origin[2])
@@ -39,11 +41,28 @@ void	draw_cross(t_vars *vars)
 	i = -1000;
 	while (i <= 1000)
 	{
-		mlx_pixel_put(vars->mlx, vars->win, origin[0] + i * vars->zoom, origin[1], 0xFFFFFF);
-		mlx_pixel_put(vars->mlx, vars->win, origin[0], origin[1] + i * vars->zoom, 0xFFFFFF);
+		mlx_pixel_put(vars->mlx, vars->win, origin[0] + i * vars->zoom, origin[1], vars->color);
+		mlx_pixel_put(vars->mlx, vars->win, origin[0], origin[1] + i * vars->zoom, vars->color);
 		i++;
 	}
 }
+int	update_loop(void *param)
+{
+	t_vars *vars = (t_vars *)param;
+
+	vars->frame_count++;
+	if (vars->frame_count >= 30)
+	{
+		vars->color += 500;
+		if (vars->color > 0xFFFFFF)
+			vars->color = 0x000000;
+		vars->frame_count = 0;
+	}
+
+	draw_cross(vars);
+	return (0);
+}
+
 
 int	handle_keypress(int keycode, void *param)
 {
@@ -94,10 +113,13 @@ int	main(void)
 	}
 
 	vars.zoom = 10;
+	vars.color = 0xFF0000;
+	vars.frame_count = 0;
 
 	draw_cross(&vars);
 	mlx_key_hook(vars.win, handle_keypress, &vars);
 	mlx_hook(vars.win, 17, 0, handle_close, &vars);
+	mlx_loop_hook(vars.mlx, update_loop, &vars);
 	mlx_loop(vars.mlx);
 
 	mlx_destroy_window(vars.mlx, vars.win);
