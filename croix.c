@@ -6,7 +6,7 @@
 /*   By: amwahab <amwahab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:56:16 by amwahab           #+#    #+#             */
-/*   Updated: 2025/07/11 16:20:37 by amwahab          ###   ########.fr       */
+/*   Updated: 2025/07/11 16:26:16 by amwahab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,39 @@
 
 typedef struct s_vars
 {
-	void *mlx;
-	void *win;
+	void	*mlx;
+	void	*win;
+	int		zoom;
 }	t_vars;
 
-void get_origin(int width, int height, int origin[2])
+void	get_origin(int width, int height, int origin[2])
 {
 	origin[0] = width / 2;
 	origin[1] = height / 2;
+}
+
+void	draw_cross(t_vars *vars)
+{
+	int origin[2];
+	int i;
+
+	get_origin(WIN_WIDTH, WIN_HEIGHT, origin);
+	mlx_clear_window(vars->mlx, vars->win);
+
+	i = -10;
+	while (i <= 10)
+	{
+		mlx_pixel_put(vars->mlx, vars->win, origin[0] + i * vars->zoom, origin[1], 0xFFFFFF);
+		mlx_pixel_put(vars->mlx, vars->win, origin[0], origin[1] + i * vars->zoom, 0xFFFFFF);
+		i++;
+	}
 }
 
 int	handle_keypress(int keycode, void *param)
 {
 	t_vars *vars = (t_vars *)param;
 
+	printf("Keycode: %d\n", keycode);
 	if (keycode == 65307)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
@@ -38,6 +57,12 @@ int	handle_keypress(int keycode, void *param)
 		free(vars->mlx);
 		exit(0);
 	}
+	else if (keycode == 65451)
+		vars->zoom += 1;
+	else if (keycode == 65453 && vars->zoom > 1)
+		vars->zoom -= 1;
+
+	draw_cross(vars);
 	return (0);
 }
 
@@ -55,48 +80,28 @@ int	handle_close(void *param)
 int	main(void)
 {
 	t_vars vars;
-	int	origine[2];
-	int	i;
 
 	vars.mlx = mlx_init();
-	if(vars.mlx == NULL)
+	if (vars.mlx == NULL)
+		return (0);
+
+	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "CROIX");
+	if (vars.win == NULL)
 	{
 		mlx_destroy_display(vars.mlx);
 		free(vars.mlx);
-		return(0);
-	}
-	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "CROIX");
-	if(vars.win == NULL)
-	{
-		mlx_destroy_window(vars.mlx, vars.win);
-		free(vars.mlx);
-		return(0);
+		return (0);
 	}
 
-	// calculer les coordonees du centre de la fenetere
-	get_origin(WIN_WIDTH, WIN_HEIGHT, origine);
-	// placer un point au centre
-	
-	// tracer une ligne vers x -x y -y en partant du centre a chaque fois
-	i = 0;
-	while (i < WIN_HEIGHT)
-	{
-		mlx_pixel_put(vars.mlx, vars.win, origine[0], i, 0xFFFFFF); // blanc
-		i++;
-	}
+	vars.zoom = 10;
 
-	// Ligne horizontale
-	i = 0;
-	while (i < WIN_WIDTH)
-	{
-		mlx_pixel_put(vars.mlx, vars.win, i, origine[1], 0xFFFFFF); // blanc
-		i++;
-	}
+	draw_cross(&vars);
 	mlx_key_hook(vars.win, handle_keypress, &vars);
 	mlx_hook(vars.win, 17, 0, handle_close, &vars);
 	mlx_loop(vars.mlx);
-	mlx_destroy_display(vars.mlx);
+
 	mlx_destroy_window(vars.mlx, vars.win);
+	mlx_destroy_display(vars.mlx);
 	free(vars.mlx);
-	return(1);
+	return (1);
 }
