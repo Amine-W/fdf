@@ -6,7 +6,7 @@
 /*   By: amwahab <amwahab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:56:16 by amwahab           #+#    #+#             */
-/*   Updated: 2025/07/11 16:26:16 by amwahab          ###   ########.fr       */
+/*   Updated: 2025/07/11 16:28:02 by amwahab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	draw_cross(t_vars *vars)
 	get_origin(WIN_WIDTH, WIN_HEIGHT, origin);
 	mlx_clear_window(vars->mlx, vars->win);
 
-	i = -10;
-	while (i <= 10)
+	i = -1000;
+	while (i <= 1000)
 	{
 		mlx_pixel_put(vars->mlx, vars->win, origin[0] + i * vars->zoom, origin[1], 0xFFFFFF);
 		mlx_pixel_put(vars->mlx, vars->win, origin[0], origin[1] + i * vars->zoom, 0xFFFFFF);
