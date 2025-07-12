@@ -124,10 +124,10 @@ int	main(void)
 					points[i][j + 1].x, points[i][j + 1].y, 0x00FFDE);
 			if (i < GRID_H - 1)
 				draw_line(vars.mlx, vars.win, points[i][j].x, points[i][j].y,
-					points[i + 1][j].x, points[i + 1][j].y, 0x00FF56);
+					points[i + 1][j].x, points[i + 1][j].y, 0xFF0000);
 		}
 	}
-
+	
 	mlx_key_hook(vars.win, handle_keypress, &vars);
 	mlx_hook(vars.win, 17, 0, handle_close, &vars);
 	mlx_loop(vars.mlx);

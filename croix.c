@@ -76,9 +76,9 @@ int	handle_keypress(int keycode, void *param)
 		free(vars->mlx);
 		exit(0);
 	}
-	else if (keycode == 65451)
+	else if (keycode == 65451 || keycode == 61) 
 		vars->zoom += 1;
-	else if (keycode == 65453 && vars->zoom > 1)
+	else if ((keycode == 65453 || keycode == 45) && vars->zoom > 1)
 		vars->zoom -= 1;
 
 	draw_cross(vars);

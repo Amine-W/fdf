@@ -18,6 +18,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
-#include "minilibx-linux/mlx.h"
+#include "mlx/mlx.h"
 
 # endif
