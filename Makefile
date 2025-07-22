@@ -6,7 +6,7 @@
 #    By: amwahab <amwahab@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/21 21:54:46 by amwahab           #+#    #+#              #
-#    Updated: 2025/07/22 00:43:41 by amwahab          ###   ########.fr        #
+#    Updated: 2025/07/22 04:00:24 by amwahab          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME	= fdf
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
-SRC		= fdf.c pasring.c controls.c draw.c gnl/get_next_line.c gnl/get_next_line_utils.c 
+SRC		= fdf.c pasring.c controls.c draw.c gnl/get_next_line.c gnl/get_next_line_utils.c utils.c
 OBJ		= $(SRC:.c=.o)
 
 LIBFT_DIR	= Libft

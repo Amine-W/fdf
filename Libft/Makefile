@@ -6,7 +6,7 @@
 #    By: amwahab <amwahab@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/27 15:55:25 by amwahab           #+#    #+#              #
-#    Updated: 2025/06/28 15:30:26 by amwahab          ###   ########.fr        #
+#    Updated: 2025/07/22 11:05:40 by amwahab          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRCS	=	ft_isalpha.c \
 		ft_atoi.c \
 		ft_calloc.c \
 		ft_strcmp.c \
-		ft_strlen_tab.c 
+		ft_strlen_tab.c \
+		ft_atoi_base.c \
 
 SRCS_BONUS	=	ft_lstnew.c \
 		ft_lstadd_front.c \
