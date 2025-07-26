@@ -6,7 +6,7 @@
 /*   By: amwahab <amwahab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 03:59:35 by amwahab           #+#    #+#             */
-/*   Updated: 2025/07/22 10:25:15 by amwahab          ###   ########.fr       */
+/*   Updated: 2025/07/26 20:04:49 by amwahab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	exit_fdf(t_vars *vars, char *msg, int exit_code)
 {
 	if (vars->win)
+	{	
 		mlx_destroy_window(vars->mlx, vars->win);
+		free(vars->win);
+	}
 	if (vars->mlx)
 	{
 		mlx_destroy_display(vars->mlx);
